@@ -132,11 +132,6 @@ mvn spring-boot:run
 cd frontend
 npm install
 npm run dev
-```
-
-**Detailed setup instructions:** *[Video walkthrough available - coming soon]*
-
----
 
 ## 🧪 Testing
 
@@ -166,7 +161,7 @@ npm test
 
 ## Demo
 
-**[Demo.mp4](Demo.mp4)** - Note in the demo the pages were modified by an extension to be darker and the badges were not shown off to their full extent
+**[Demo](https://youtu.be/NrZqOlVlhFA)** - Note in the demo the pages were modified by an extension to be darker and the badges were not shown off to their full extent
 
 ---
 
@@ -217,5 +212,6 @@ All Rights Reserved - Academic Project Only
 See [LICENSE](LICENSE) file for complete terms.
 
 ---
+
 
 **Status:** ✅ Completed | 🎓 Graded (HD) | 📦 Deployed | 🔒 Academic Portfolio Only
