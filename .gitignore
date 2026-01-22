@@ -41,4 +41,5 @@ frontend/package-lock.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.env
+.envDemo.mp4
+*.mp4

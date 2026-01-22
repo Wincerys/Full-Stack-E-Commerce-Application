@@ -166,7 +166,7 @@ npm test
 
 ## Demo
 
-*[video demonstration showcasing key features]*
+**[Demo.mp4](Demo.mp4)** - Note in the demo the pages were modified by an extension to be darker and the badges were not shown off to their full extent
 
 ---
 
