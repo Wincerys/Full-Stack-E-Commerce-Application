@@ -1,0 +1,55 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: events-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-abc}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-eventsdb}
+      MYSQL_USER: ${MYSQL_USER:-events}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-abc}
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -p${MYSQL_PASSWORD:-abc} --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: events-app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - app_uploads:/app/uploads
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/eventsdb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER:-events}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD:-abc}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      APP_UPLOADDIR: /app/uploads
+
+  adminer:
+    image: adminer:latest
+    container_name: events-adminer
+    restart: unless-stopped
+    ports:
+      - "${ADMINER_PORT:-8081}:8080"
+    depends_on:
+      - mysql
+
+volumes:
+  db_data: {}
+  app_uploads: {}

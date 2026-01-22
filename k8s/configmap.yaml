@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: events-config
+data:
+  MYSQL_ROOT_PASSWORD: "abc"
+  MYSQL_DATABASE: "eventsdb"
+  MYSQL_USER: "events"
+  MYSQL_PASSWORD: "abc"
+  SPRING_DATASOURCE_USERNAME: "events"
+  SPRING_DATASOURCE_PASSWORD: "abc"
+  SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
+  APP_UPLOADDIR: "/app/uploads"
+  APP_JWT_SECRET: "dev-super-secret-change-me"
+  APP_JWT_TTLSECONDS: "86400"

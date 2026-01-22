@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: events-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: events-app
+  template:
+    metadata:
+      labels:
+        app: events-app
+    spec:
+      containers:
+        - name: events-app
+          image: events-app:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: events-config
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://mysql:3306/eventsdb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+          volumeMounts:
+            - name: app-uploads
+              mountPath: /app/uploads
+      volumes:
+        - name: app-uploads
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: events-app
+spec:
+  selector:
+    app: events-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
